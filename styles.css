@@ -1,0 +1,20 @@
+body {
+  height: 100vh;
+  background: #f4f6f9;
+}
+
+.login-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+}
+
+.login-logo {
+  width: 120px;   /* tamaño del logo */
+  height: auto;
+}
+
+.user-logo{
+  width: 24px;   /* tamaño del logo */
+  height: auto;
+}
