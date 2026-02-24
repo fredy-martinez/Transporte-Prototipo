@@ -42,17 +42,27 @@ function cargarHistorial() {
   historialContainer.innerHTML = ''; // Limpiar
   const historial = JSON.parse(localStorage.getItem('historial')) || [];
   historial.forEach(u => {
-    const card = document.createElement('div');
-    card.className = 'card mb-3 shadow-sm unidad-card';
-    card.innerHTML = `
-      <div class="card-body d-flex justify-content-between align-items-center">
-        <div>
-          <h5 class="card-title mb-1">${u.marca}</h5>
-          <p class="fw-bold mb-0">${u.placa}</p>
-          <p class="text-muted mb-0"><small>Entrada: ${u.horaEntrada} | Salida: ${u.horaSalida}</small></p>
-        </div>
+  const card = document.createElement('div');
+  card.className = 'card mb-3 shadow-sm unidad-card';
+  card.innerHTML = `
+    <div class="card-body d-flex align-items-center">
+      
+      <!-- QR -->
+      <div class="me-3">
+        <img src="img/qr.png" alt="QR" width="80" class="img-fluid rounded">
       </div>
-    `;
+
+      <!-- Información -->
+      <div>
+        <h5 class="card-title mb-1">${u.marca}</h5>
+        <p class="fw-bold mb-0">${u.placa}</p>
+        <p class="text-muted mb-0">
+          <small>Entrada: ${u.horaEntrada} | Salida: ${u.horaSalida}</small>
+        </p>
+      </div>
+
+    </div>
+  `;
     historialContainer.appendChild(card);
   });
 }
@@ -130,6 +140,11 @@ btn.addEventListener('click', () => {
     };
     guardarHistorial(unidadHistorial);
 
+    // Guardar ID como finalizado
+    let finalizadas = JSON.parse(localStorage.getItem('finalizadas')) || [];
+    finalizadas.push(unidadActual.dataset.id);
+    localStorage.setItem('finalizadas', JSON.stringify(finalizadas));
+
     // Eliminar de pendiente
     unidadActual.remove();
     unidadActual = null;
@@ -151,3 +166,17 @@ if(btnCerrar){
     localStorage.removeItem('historial'); // borra el historial
   });
 }
+
+function filtrarPendientes() {
+  const finalizadas = JSON.parse(localStorage.getItem('finalizadas')) || [];
+  const cards = document.querySelectorAll('.unidad-card');
+
+  cards.forEach(card => {
+    if (finalizadas.includes(card.dataset.id)) {
+      card.remove();
+    }
+  });
+}
+
+
+filtrarPendientes();
