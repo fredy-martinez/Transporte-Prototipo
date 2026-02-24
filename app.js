@@ -163,7 +163,7 @@ btn.addEventListener('click', () => {
 const btnCerrar = document.getElementById('cerrarSesionBtn');
 if(btnCerrar){
   btnCerrar.addEventListener('click', () => {
-    localStorage.removeItem('historial'); // borra el historial
+    localStorage.clear(); // borra el historial
   });
 }
 
